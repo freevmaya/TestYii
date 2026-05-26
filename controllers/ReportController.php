@@ -6,15 +6,24 @@ use Yii;
 use yii\web\Controller;
 use yii\db\Query;
 use app\models\Book;
+use app\models\ReportForm;
 
 class ReportController extends Controller
 {
-    public function actionIndex($year = null)
+    public function actionIndex()
     {
-        // Если год не указан, берём текущий
-        if ($year === null) {
-            $year = date('Y');
+        $model = new ReportForm();
+        
+        // Загружаем данные из GET-запроса
+        if ($model->load(Yii::$app->request->get('ReportForm'), '')) {
+            // Данные загружены
         }
+        
+        if (!$model->validate() || !$model->year) {
+            $model->year = date('Y');
+        }
+        
+        $year = $model->year;
         
         // Получаем доступные годы из базы
         $availableYears = Book::find()
@@ -22,11 +31,6 @@ class ReportController extends Controller
             ->distinct()
             ->orderBy(['year' => SORT_DESC])
             ->column();
-        
-        // Если нет данных, показываем пустой массив
-        if (empty($availableYears)) {
-            $availableYears = [date('Y')];
-        }
         
         // Запрос ТОП-10 авторов
         $query = (new Query())
@@ -44,9 +48,9 @@ class ReportController extends Controller
             ->limit(10);
         
         $topAuthors = $query->all();
-        
-        // Рендерим представление
+
         return $this->render('index', [
+            'model' => $model,
             'topAuthors' => $topAuthors,
             'year' => $year,
             'availableYears' => $availableYears,
