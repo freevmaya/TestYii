@@ -9,7 +9,7 @@ use app\models\Author;
 
 class SubscriptionController extends Controller
 {
-    // Страница подписки
+    
     public function actionSubscribe($authorId)
     {
         $author = Author::findOne($authorId);

@@ -12,11 +12,9 @@ class m000000_000003_create_book_author_table extends Migration
         ]);
         
         $this->addPrimaryKey('pk-book_author', '{{%book_author}}', ['book_id', 'author_id']);
-        
-        /* Пока не надо 
+
         $this->addForeignKey('fk-book_author-book_id', '{{%book_author}}', 'book_id', '{{%books}}', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk-book_author-author_id', '{{%book_author}}', 'author_id', '{{%authors}}', 'id', 'CASCADE', 'CASCADE');
-        */
     }
 
     public function safeDown()

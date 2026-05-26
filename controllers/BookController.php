@@ -79,11 +79,6 @@ class BookController extends Controller
     {
         $book = $this->findModel($id);
         
-        // Проверяем права
-        if (!$book->canEdit()) {
-            throw new ForbiddenHttpException('У вас нет прав для редактирования этой книги.');
-        }
-        
         $authors = Author::find()->orderBy('full_name')->all();
         
         if ($book->load(Yii::$app->request->post()) && $book->save()) {
@@ -100,11 +95,6 @@ class BookController extends Controller
     public function actionDelete($id)
     {
         $book = $this->findModel($id);
-        
-        // Проверяем права
-        if (!$book->canEdit()) {
-            throw new ForbiddenHttpException('У вас нет прав для удаления этой книги.');
-        }
         
         $book->delete();
         Yii::$app->session->setFlash('success', 'Книга удалена.');

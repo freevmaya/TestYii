@@ -18,7 +18,6 @@ class SmsPilot extends Component
         
         // Если ключа нет, просто логируем и выходим
         if (!$apiKey) {
-            Yii::info('Все параметры: ' . print_r(Yii::$app->params, true), 'sms-debug');
             Yii::warning('SMS не отправлено: не настроен API ключ smsPilotApiKey в params.php', 'sms');
             return false;
         }
@@ -35,7 +34,6 @@ class SmsPilot extends Component
             'apikey' => $apiKey,
             'to' => $phone,
             'text' => $message,
-            'from' => 'INFO',
             'format' => 'json',
         ];
         

@@ -14,7 +14,7 @@ class m000000_000005_create_user_table extends Migration
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
         
-        // Создаём тестового пользователя (username: admin, password: admin)
+        // Создаём тестового пользователя
         $this->insert('{{%user}}', [
             'username' => 'admin',
             'password_hash' => Yii::$app->security->generatePasswordHash('admin'),

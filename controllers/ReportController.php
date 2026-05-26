@@ -15,9 +15,7 @@ class ReportController extends Controller
         $model = new ReportForm();
         
         // Загружаем данные из GET-запроса
-        if ($model->load(Yii::$app->request->get('ReportForm'), '')) {
-            // Данные загружены
-        }
+        $model->load(Yii::$app->request->get('ReportForm'), '');
         
         if (!$model->validate() || !$model->year) {
             $model->year = date('Y');
@@ -31,8 +29,7 @@ class ReportController extends Controller
             ->distinct()
             ->orderBy(['year' => SORT_DESC])
             ->column();
-        
-        // Запрос ТОП-10 авторов
+            
         $query = (new Query())
             ->select([
                 'a.id',

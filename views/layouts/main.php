@@ -32,7 +32,6 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="header">
-    <a href="/">Каталог книг</a>
     <a href="/index.php?r=book/index">Книги</a>
     <a href="/index.php?r=author/index">Авторы</a>
     <a href="/index.php?r=report/index">ТОП-10 авторов</a>
