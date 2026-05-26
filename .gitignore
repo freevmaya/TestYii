@@ -1,0 +1,103 @@
+# Composer
+composer.phar
+composer.lock
+/vendor/
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+.project
+.classpath
+.netrwhist
+*~
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Yii2 specific
+/runtime/
+/web/assets/
+/.env
+/.env.local
+/.env.local.php
+
+# Logs
+*.log
+*.error
+/error.log
+/access.log
+
+# Uploads (если используете загрузку файлов)
+/web/uploads/
+!web/uploads/.gitkeep
+
+# Cache
+.cache/
+/cache/
+/sessions/
+
+# Tests
+/tests/_output/
+/tests/_support/_generated/
+
+# Code coverage
+/coverage/
+/.phpunit.result.cache
+
+# Packages
+/node_modules/
+/npm-debug.log
+/yarn-error.log
+/package-lock.json
+/yarn.lock
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Config with sensitive data (если есть)
+/config/db-local.php
+/config/params-local.php
+
+# Environment files
+.env
+.env.*
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# PHPUnit
+.phpunit.result.cache
+
+# Temporary files
+/tmp/
+/temp/
+
+# Vagrant
+.vagrant/
+
+# PHP CS Fixer
+.php_cs.cache
+
+# Debug
+/.phpdebugbar/
