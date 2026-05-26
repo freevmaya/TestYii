@@ -7,11 +7,22 @@ use yii\base\Component;
 
 class SmsPilot extends Component
 {
-    private $apiKey = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; // Тестовый ключ эмулятора
+    
     private $apiUrl = 'https://smspilot.ru/api.php';
     
     public function send($phone, $message)
     {
+        // Получаем ключ из параметров
+
+        $apiKey = Yii::$app->params['smsPilotApiKey'] ?? null;
+        
+        // Если ключа нет, просто логируем и выходим
+        if (!$apiKey) {
+            Yii::info('Все параметры: ' . print_r(Yii::$app->params, true), 'sms-debug');
+            Yii::warning('SMS не отправлено: не настроен API ключ smsPilotApiKey в params.php', 'sms');
+            return false;
+        }
+        
         // Очищаем номер телефона
         $phone = preg_replace('/[^0-9]/', '', $phone);
         if (strlen($phone) === 10) {
@@ -21,7 +32,7 @@ class SmsPilot extends Component
         }
         
         $data = [
-            'apikey' => $this->apiKey,
+            'apikey' => $apiKey,
             'to' => $phone,
             'text' => $message,
             'from' => 'INFO',

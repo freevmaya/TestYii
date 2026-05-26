@@ -11,10 +11,24 @@ class ReportController extends Controller
 {
     public function actionIndex($year = null)
     {
+        // Если год не указан, берём текущий
         if ($year === null) {
             $year = date('Y');
         }
         
+        // Получаем доступные годы из базы
+        $availableYears = Book::find()
+            ->select('year')
+            ->distinct()
+            ->orderBy(['year' => SORT_DESC])
+            ->column();
+        
+        // Если нет данных, показываем пустой массив
+        if (empty($availableYears)) {
+            $availableYears = [date('Y')];
+        }
+        
+        // Запрос ТОП-10 авторов
         $query = (new Query())
             ->select([
                 'a.id',
@@ -30,8 +44,8 @@ class ReportController extends Controller
             ->limit(10);
         
         $topAuthors = $query->all();
-        $availableYears = Book::find()->select('year')->distinct()->orderBy(['year' => SORT_DESC])->column();
         
+        // Рендерим представление
         return $this->render('index', [
             'topAuthors' => $topAuthors,
             'year' => $year,

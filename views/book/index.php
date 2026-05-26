@@ -45,7 +45,6 @@ $isUser = !Yii::$app->user->isGuest;
                         echo implode(', ', $authors);
                         ?>
                     </p>
-                    <?= Html::a('Подробнее', ['view', 'id' => $book->id], ['class' => 'btn btn-primary']) ?>
                 </div>
                 <div class="card-footer">
                     <?= Html::a('Подробнее', ['view', 'id' => $book->id], ['class' => 'btn btn-primary btn-sm']) ?>

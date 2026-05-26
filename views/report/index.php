@@ -3,54 +3,61 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'ТОП-10 авторов по количеству книг';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="report-index">
     <h1><?= Html::encode($this->title) ?></h1>
     
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <form method="get" action="<?= Url::to(['index']) ?>" class="form-inline">
-                <label class="mr-2">Год:</label>
-                <select name="year" class="form-control mr-2">
+    <!-- Форма выбора года - указываем явный URL -->
+    <div style="margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 5px;">
+        <form method="get" action="/index.php?r=report/index" style="display: flex; gap: 10px; align-items: flex-end;">
+            <div>
+                <label for="year">Выберите год:</label>
+                <select name="year" id="year" style="padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
                     <?php foreach ($availableYears as $availableYear): ?>
                         <option value="<?= $availableYear ?>" <?= $availableYear == $year ? 'selected' : '' ?>>
                             <?= $availableYear ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <button type="submit" class="btn btn-primary">Показать</button>
-            </form>
-        </div>
+            </div>
+            <div>
+                <button type="submit" style="padding: 8px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Показать
+                </button>
+            </div>
+        </form>
     </div>
     
+    <!-- Результаты -->
     <?php if (empty($topAuthors)): ?>
-        <div class="alert alert-info">
+        <div style="padding: 20px; background: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; color: #856404;">
             Нет данных за <?= Html::encode($year) ?> год.
         </div>
     <?php else: ?>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Автор</th>
-                        <th>Количество книг в <?= $year ?> году</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($topAuthors as $index => $author): ?>
-                    <tr>
-                        <td><?= $index + 1 ?></td>
-                        <td>
-                            <?= Html::a(Html::encode($author['full_name']), ['author/view', 'id' => $author['id']]) ?>
-                        </td>
-                        <td><?= $author['book_count'] ?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 10px; background: #f4f4f4;">#</th>
+                    <th style="border: 1px solid #ddd; padding: 10px; background: #f4f4f4;">Автор</th>
+                    <th style="border: 1px solid #ddd; padding: 10px; background: #f4f4f4;">Количество книг в <?= Html::encode($year) ?> году</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($topAuthors as $index => $author): ?>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">
+                        <strong><?= $index + 1 ?></strong>
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">
+                        <?= Html::a(Html::encode($author['full_name']), ['author/view', 'id' => $author['id']]) ?>
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">
+                        <?= $author['book_count'] ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+         </table>
     <?php endif; ?>
 </div>

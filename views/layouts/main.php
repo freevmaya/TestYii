@@ -1,8 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
@@ -16,72 +13,52 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+        .header { background: #333; color: white; padding: 15px 20px; }
+        .header a { color: white; text-decoration: none; margin-right: 15px; }
+        .header a:hover { text-decoration: underline; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .footer { background: #333; color: white; text-align: center; padding: 15px; margin-top: 50px; }
+        .alert { padding: 10px; margin-bottom: 15px; border-radius: 3px; }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .float-right { float: right; }
+        .btn-link { background: none; border: none; color: white; cursor: pointer; text-decoration: underline; }
+        .btn-link:hover { text-decoration: none; }
+    </style>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'Каталог книг',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
-    ]);
-    
-    $menuItems = [
-        ['label' => 'Книги', 'url' => ['/book/index']],
-        ['label' => 'Авторы', 'url' => ['/author/index']],
-        ['label' => 'ТОП-10 авторов', 'url' => ['/report/index']],
-    ];
-    
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Выйти (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav ml-auto'],
-        'items' => $menuItems,
-    ]);
-    
-    NavBar::end();
-    ?>
-    
-    <div class="container" style="margin-top: 70px;">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?php foreach (Yii::$app->session->getAllFlashes() as $key => $message): ?>
-            <div class="alert alert-<?= $key ?> alert-dismissible fade show" role="alert">
-                <?= $message ?>
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        <?php endforeach; ?>
-        <?= $content ?>
-    </div>
+<div class="header">
+    <a href="/">Каталог книг</a>
+    <a href="/index.php?r=book/index">Книги</a>
+    <a href="/index.php?r=author/index">Авторы</a>
+    <a href="/index.php?r=report/index">ТОП-10 авторов</a>
+    <?php if (Yii::$app->user->isGuest): ?>
+        <a href="/index.php?r=site/login" style="float: right;">Вход</a>
+    <?php else: ?>
+        <span style="float: right;">
+            <?= Yii::$app->user->identity->username ?>
+            <?= Html::beginForm(['/site/logout'], 'post', ['style' => 'display: inline;']) ?>
+                <?= Html::submitButton('Выйти', ['class' => 'btn-link']) ?>
+            <?= Html::endForm() ?>
+        </span>
+    <?php endif; ?>
 </div>
 
-<footer class="footer mt-5 py-3 bg-light">
-    <div class="container">
-        <p class="text-muted mb-0">&copy; Каталог книг <?= date('Y') ?></p>
-    </div>
-</footer>
+<div class="container">
+    <?php foreach (Yii::$app->session->getAllFlashes() as $key => $message): ?>
+        <div class="alert alert-<?= $key ?>"><?= $message ?></div>
+    <?php endforeach; ?>
+    <?= $content ?>
+</div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="footer">
+    &copy; Каталог книг <?= date('Y') ?>
+</div>
+
 <?php $this->endBody() ?>
 </body>
 </html>
