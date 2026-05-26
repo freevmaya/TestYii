@@ -1,1 +1,1 @@
-Реализация ТЗ на https://disk.hh.ru/download/redirect?upload_id=da890492-297b-4640-8cc3-5c7c4b1c9c9a&hhtmSource=chat
+Реализация ТЗ https://disk.hh.ru/download/redirect?upload_id=da890492-297b-4640-8cc3-5c7c4b1c9c9a&hhtmSource=chat
