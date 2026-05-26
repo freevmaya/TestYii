@@ -3,6 +3,8 @@ composer.phar
 composer.lock
 /vendor/
 
+combine*.*
+
 # IDE
 .idea/
 .vscode/
