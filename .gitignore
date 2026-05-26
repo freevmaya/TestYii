@@ -4,6 +4,8 @@ composer.lock
 /vendor/
 /vagrant/
 
+/*.conf
+
 combine*.*
 
 # IDE
